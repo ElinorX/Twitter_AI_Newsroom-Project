@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head> 
+<!--  Head section contains information like page name, style sheets. 
+  Usually you can copy-paste the code for this section from a boilerplate
+  -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tweet Newsroom</title>
+    <!--   This is where you link your style sheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+    
+  <div class='bg'>
+    <div class='content'>
+    <h1>AI NEWSROOM</h1>
+  <!--  A button that redirect users to the homepage -->
+      <a href="{{ url_for('home') }}"><button class='blue-btn'>Home</button></a>
+      
+    <div class="grid-container">
+      <div class="left-col">
+      <!--     Summary card for tweets    -->
+        <li class='tweet'>
+          <p class='card_heading'>
+            What's recent on Twitter:
+          </p>
+          <p> We found {{ tweet_count }} 
+   tweets under {{query}}. </p> <p> Displaying the Top 10 Tweets... </p>
+        </li>
+      <!--     Jinja2 Syntax, see lesson 6 for explanation    -->
+        {% for tweet in tweets %} 
+        <li class="tweet">
+  
+        <p id='tweet_author'>
+          <span style='font-weight: bold;'>Author ID: </span>
+          {{ tweet.author }}
+        </p>
+          
+        <p id='tweet_body'> 
+          {{ tweet.text }} 
+        </p>
+          
+        <p class='datetime'> 
+          <span > TimePosted: </span>
+          {{ tweet.time_posted }}
+        </p>
+          
+        <hr />
+      
+        <span id='tweet_likes'> Likes: {{ tweet.likes }} </span>
+        <span id='tweet_retweets'> Retweets: {{ tweet.retweets }}</span>
+        <span id='tweet_replis'> Replies: {{ tweet.replies }}</span>
+          
+        </li>
+        {% endfor %} 
+      </div>
+      
+      <div class="right-col"> 
+        <!--     Summary card for news    -->
+        <li class='news' id='summary'>
+          <p class='card_heading'>
+          Todays News: 
+          </p>
+          <p> We found {{articles_count}} 
+   news articles under {{query}}. Here's an AI-generated summary of what's going on:
+          </p> 
+          <p>{{articles_summary}} </p>
+          
+          {% for art in news %} 
+          <li class='news'>
+    
+            <p class='card_heading'> 
+              {{ art.title }} 
+            </p>
+            
+            <p id='news_author'> 
+              <span style='font-weight: bold;'>Author: </span>
+              {{ art.author }}
+            </p>
+    
+            <p id='news_article'> 
+              {{ art.description }} 
+            </p>
+    
+            <p class='datetime'> 
+              <span > TimePosted: </span>
+              {{ art.date }}
+            </p>
+    
+            <p id='news_link'>
+              <span><a target="_blank" rel="noopener noreferrer" href={{art.url}}>
+              Read more
+            </a></span>
+            </p>
+            
+          </li>
+          {% endfor %} 
+        
+      </div>
+        
+    </div> 
+      
+    </div>
+  </div>
+    
+</body>
+</html>
